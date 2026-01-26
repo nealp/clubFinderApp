@@ -1,10 +1,10 @@
-
+import TagChip from "./TagChip";
 export type ClubCardProps = {
   name: string;
   description?: string;
   meetingTime?: string;
   skillLevel?: string;
-   tags?: string[];
+  tags?: string[];
   onViewDetails?: () => void; // optional click handler
 };
 
@@ -14,7 +14,7 @@ export default function ClubCard({
   meetingTime,
   skillLevel,
   tags,
-//   onViewDetails,
+  //   onViewDetails,
 }: ClubCardProps) {
   return (
     <div
@@ -29,20 +29,16 @@ export default function ClubCard({
 
       {tags && tags.length > 0 ? (
         <div className="mb-4 flex flex-wrap gap-2">
-        {tags.map((tag) => (
-        <span
-        key={tag}
-        className="rounded-full border border-gray-200 bg-gray-50 px-3 py-1 text-xs font-medium text-gray-700"
-      >
-        {tag}
-      </span>
-    ))}
-  </div>
-) : null}
-
+          {tags.map((tag) => (
+            <TagChip key={tag} label={tag} />
+          ))}
+        </div>
+      ) : null}
 
       {meetingTime ? (
-        <p className="text-sm text-gray-500 mb-1">Meeting Time: {meetingTime}</p>
+        <p className="text-sm text-gray-500 mb-1">
+          Meeting Time: {meetingTime}
+        </p>
       ) : null}
 
       {skillLevel ? (
@@ -51,11 +47,11 @@ export default function ClubCard({
 
       <div className="mt-auto flex justify-end">
         <button
-  type="button"
-  className="text-white bg-red-500 hover:bg-red-600 rounded-full px-5 py-2"
->
-  View Details(Card)
-</button>
+          type="button"
+          className="text-white bg-red-500 hover:bg-red-600 rounded-full px-5 py-2"
+        >
+          View Details(Card)
+        </button>
       </div>
     </div>
   );
