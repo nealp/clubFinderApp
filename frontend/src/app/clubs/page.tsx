@@ -38,33 +38,23 @@ const placeholderClubs: Club[] = [
   },
 ];
 
+import ClubCard from "@/components/ClubCard";
+
 export default function ClubsPage() {
   return (
-    <main className="min-h-screen bg-white text-black p-8">
-      <h1 className="text-3xl font-bold">Clubs</h1>
-      <p className="mt-2 text-gray-600">All Clubs:</p>
-      <div className="mt-6 grid grid-cols-[repeat(auto-fit,280px)] gap-10 justify-left">
-        {placeholderClubs.map((club) => (
-          <div
-            key={club.id}
-            className="border border-gray-300 rounded-lg p-4 hover:shadow-lg transition-shadow
-             w-[280px] h-[360px] flex flex-col"
-          >
-            <h2 className="text-xl font-semibold mb-2">{club.name}</h2>
-            <p className="text-sm text-gray-700 mb-4">{club.description}</p>
-            <p className="text-sm text-gray-500 mb-1">
-              Meeting Time: {club.meeting_time}
-            </p>
-            <p className="text-sm text-gray-500 mb-1">
-              Skill Level: {club.skill_level}
-            </p>
-            <div className="mt-auto flex justify-end">
-              <button className="text-white bg-red-500 hover:bg-red-600 rounded-full px-5 py-2">
-                View Details
-              </button>
-            </div>
-          </div>
-        ))}
+    <main className="min-h-screen bg-white text-black">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+        <h1 className="text-2xl font-bold sm:text-3xl">Clubs</h1>
+        <p className="mt-2 text-gray-600">All Clubs:</p>
+
+        <div
+          className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6
+            lg:grid-cols-3 lg:gap-8 xl:grid-cols-4"
+        >
+          {placeholderClubs.map((club) => (
+            <ClubCard key={club.id} club={club} />
+          ))}
+        </div>
       </div>
     </main>
   );
