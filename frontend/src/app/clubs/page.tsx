@@ -40,8 +40,6 @@ const placeholderClubs: Club[] = [
   },
 ];
 
-import ClubCard from "@/components/ClubCard";
-
 export default function ClubsPage() {
   return (
     <main className="min-h-screen bg-white text-black">
