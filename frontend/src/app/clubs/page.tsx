@@ -1,3 +1,5 @@
+import ClubCard from "@/components/ClubCard";
+
 type Club = {
   id: string;
   name: string;
@@ -6,7 +8,7 @@ type Club = {
   meeting_time?: string;
   skill_level?: string;
   join_link?: string;
-  socials?: unknown; //json object with social media links
+  socials?: unknown; // json object with social media links
 };
 
 const placeholderClubs: Club[] = [
