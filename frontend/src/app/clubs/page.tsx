@@ -40,28 +40,23 @@ const placeholderClubs: Club[] = [
   },
 ];
 
+import ClubCard from "@/components/ClubCard";
+
 export default function ClubsPage() {
   return (
-    <main className="min-h-screen bg-white text-black p-8">
-      <h1 className="text-3xl font-bold">Clubs</h1>
-      <p className="mt-2 text-gray-600">All Clubs:</p>
+    <main className="min-h-screen bg-white text-black">
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
+        <h1 className="text-2xl font-bold sm:text-3xl">Clubs</h1>
+        <p className="mt-2 text-gray-600">All Clubs:</p>
 
-      <div className="mt-6 grid grid-cols-[repeat(auto-fit,280px)] gap-10 justify-left">
-        {placeholderClubs.map((club) => (
-          <ClubCard
-            key={club.id}
-            name={club.name}
-            description={club.description}
-            meetingTime={club.meeting_time}
-            skillLevel={club.skill_level}
-            tags={club.tags}
-
-            // onViewDetails={() => {
-            //   // temporary behavior (later you can navigate to a details page)
-            //   alert(`View details: ${club.name}`);
-            // }}
-          />
-        ))}
+        <div
+          className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6
+            lg:grid-cols-3 lg:gap-8 xl:grid-cols-4"
+        >
+          {placeholderClubs.map((club) => (
+            <ClubCard key={club.id} club={club} />
+          ))}
+        </div>
       </div>
     </main>
   );
