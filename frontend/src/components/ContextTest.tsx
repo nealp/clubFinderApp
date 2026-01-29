@@ -11,7 +11,6 @@ export default function ContextTest() {
     logout,
     addSavedClub,
     removeSavedClub,
-    isClubSaved,
   } = useApp();
 
   const handleTestLogin = () => {
@@ -34,8 +33,7 @@ export default function ContextTest() {
   return (
     <div className="mt-8 p-6 border-2 border-blue-500 rounded-lg bg-blue-50">
       <h2 className="text-2xl font-bold mb-4">Context Test Panel</h2>
-      
-      {/* Auth Section */}
+
       <div className="mb-6 p-4 bg-white rounded">
         <h3 className="font-semibold text-lg mb-2">Authentication</h3>
         <p>Status: <span className={isAuthenticated ? 'text-green-600 font-bold' : 'text-red-600 font-bold'}>
@@ -64,7 +62,6 @@ export default function ContextTest() {
         </div>
       </div>
 
-      {/* Saved Clubs Section */}
       <div className="p-4 bg-white rounded">
         <h3 className="font-semibold text-lg mb-2">Saved Clubs ({savedClubs.length})</h3>
         {savedClubs.length === 0 ? (
@@ -98,12 +95,11 @@ export default function ContextTest() {
         </button>
       </div>
 
-      {/* Instructions */}
       <div className="mt-4 p-3 bg-yellow-50 border border-yellow-300 rounded text-sm">
         <p className="font-semibold mb-1">How to test:</p>
         <ol className="list-decimal list-inside space-y-1 text-gray-700">
-          <li>Click "Test Login" - you should see user info appear</li>
-          <li>Click "Add Test Club" - a club should appear in the list</li>
+          <li>Click &quot;Test Login&quot; - you should see user info appear</li>
+          <li>Click &quot;Add Test Club&quot; - a club should appear in the list</li>
           <li>Refresh the page - data should persist (loaded from localStorage)</li>
           <li>Check browser DevTools → Application → Local Storage to see stored data</li>
         </ol>
