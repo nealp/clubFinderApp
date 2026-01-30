@@ -9,7 +9,7 @@ type ClubCardProps = {
     join_link?: string;
   };
 };
-
+import TagChip from "./TagChip";
 export default function ClubCard({ club }: ClubCardProps) {
   return (
     <article
@@ -23,19 +23,22 @@ export default function ClubCard({ club }: ClubCardProps) {
         </p>
       )}
       {club.meeting_time && (
-        <p className="mt-3 text-sm text-gray-500">Meeting: {club.meeting_time}</p>
+        <p className="mt-3 text-sm text-gray-500">
+          Meeting: {club.meeting_time}
+        </p>
       )}
       {club.skill_level && (
         <p className="text-sm text-gray-500">Level: {club.skill_level}</p>
       )}
       <div className="mt-4 flex flex-wrap gap-2 pt-2 sm:mt-auto">
         {club.tags?.slice(0, 3).map((tag) => (
-          <span
-            key={tag}
-            className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-600"
-          >
-            {tag}
-          </span>
+          <TagChip label={tag} key={tag} />
+          // <span
+          //   key={tag}
+          //   className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-600"
+          // >
+          //   {tag}
+          // </span>
         ))}
       </div>
       <div className="mt-4 flex justify-end">

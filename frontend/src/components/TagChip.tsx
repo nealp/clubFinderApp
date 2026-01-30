@@ -5,8 +5,6 @@ interface TagChipProps {
 }
 
 export default function TagChip({ label }: TagChipProps) {
-  // We use colorClass (e.g., "bg-maroon-700" or "bg-green-500")
-
   return (
     <span
       className="
