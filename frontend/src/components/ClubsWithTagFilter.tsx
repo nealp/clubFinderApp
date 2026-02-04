@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { FILTER_TAGS } from "@/constants/tags";
+import { useState, useRef, useEffect, useMemo } from "react";
 
 export type Club = {
   id: string;
@@ -14,11 +13,28 @@ export type Club = {
   socials?: Record<string, string> | null;
 };
 
-function clubMatchesTag(club: Club, tag: string): boolean {
+/** Build filter options from actual DB tags so spelling/grammar match; match is case-insensitive. */
+function getUniqueTagsFromClubs(clubs: Club[]): string[] {
+  const seen = new Set<string>();
+  const result: string[] = [];
+  for (const club of clubs) {
+    for (const tag of club.tags ?? []) {
+      const t = tag.trim();
+      if (!t) continue;
+      const key = t.toLowerCase();
+      if (seen.has(key)) continue;
+      seen.add(key);
+      result.push(t);
+    }
+  }
+  result.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: "base" }));
+  return result;
+}
+
+function clubMatchesTag(club: Club, selectedTag: string): boolean {
   if (!club.tags?.length) return false;
-  return club.tags.some(
-    (t) => t.toLowerCase().trim() === tag.toLowerCase().trim()
-  );
+  const want = selectedTag.toLowerCase().trim();
+  return club.tags.some((t) => t.toLowerCase().trim() === want);
 }
 
 function FilterIcon() {
@@ -62,6 +78,8 @@ export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
 
+  const filterTagOptions = useMemo(() => getUniqueTagsFromClubs(clubs), [clubs]);
+
   const filteredClubs =
     selectedTag == null
       ? clubs
@@ -93,7 +111,7 @@ export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
       <h1 className="text-2xl font-bold sm:text-3xl">Clubs</h1>
       <p className="mt-2 text-gray-600">All Clubs:</p>
 
-      {/* Filter button – opens dropdown with tags from src/constants/tags.ts */}
+      {/* Filter options = tags from DB so spelling/grammar match */}
       <div className="relative mt-4 inline-block" ref={filterRef}>
         <button
           type="button"
@@ -132,7 +150,7 @@ export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
               >
                 All Clubs
               </button>
-              {FILTER_TAGS.map((tag) => (
+              {filterTagOptions.map((tag) => (
                 <button
                   key={tag}
                   type="button"
@@ -163,7 +181,7 @@ export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
             <p className="text-sm text-gray-700 mb-4 line-clamp-3">
               {club.description}
             </p>
-            {/* Tags displayed on card */}
+            {/* Tags displayed exactly as in DB */}
             {club.tags && club.tags.length > 0 && (
               <div className="flex flex-wrap gap-1.5 mb-3">
                 {club.tags.map((tag) => (

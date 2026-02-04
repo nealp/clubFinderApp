@@ -26,9 +26,8 @@ async function getClubs(): Promise<Club[]> {
     return [];
   }
 
-  return (data || []).map((row: Club) => ({
-    ...row,
-    socials:
+  return (data || []).map((row: Club) => {
+    const socials =
       typeof row.socials === "string"
         ? (() => {
             try {
@@ -37,8 +36,42 @@ async function getClubs(): Promise<Club[]> {
               return null;
             }
           })()
-        : row.socials || null,
-  })) as Club[];
+        : row.socials || null;
+
+    const tags = normalizeTagsFromRow(row.tags);
+
+    return {
+      ...row,
+      socials,
+      tags,
+    };
+  }) as Club[];
+}
+
+function normalizeTagsFromRow(tags: unknown): string[] {
+  if (Array.isArray(tags)) {
+    return tags
+      .filter((t): t is string => typeof t === "string")
+      .map((t) => t.trim())
+      .filter(Boolean);
+  }
+  if (typeof tags === "string") {
+    const trimmed = tags.trim();
+    if (!trimmed) return [];
+    try {
+      const parsed = JSON.parse(trimmed) as unknown;
+      if (Array.isArray(parsed)) {
+        return parsed
+          .filter((t): t is string => typeof t === "string")
+          .map((t) => t.trim())
+          .filter(Boolean);
+      }
+    } catch {
+      // not JSON, treat as comma-separated
+    }
+    return trimmed.split(",").map((t) => t.trim()).filter(Boolean);
+  }
+  return [];
 }
 /*
 const placeholderClubs: Club[] = [
