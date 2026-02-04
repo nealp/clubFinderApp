@@ -12,7 +12,7 @@ export default function Footer() {
             Club Finder App
           </span>
           <p className="text-sm leading-relaxed">
-            Connecting you with the best clubs for you in UMass
+            Connecting you with the best clubs at UMass.
           </p>
         </div>
 
