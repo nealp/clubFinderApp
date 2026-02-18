@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo } from "react";
+import ClubCard from "@/components/ClubCard";
+import ClubDetailModal from "@/components/ClubDetailModal";
 
 export type Club = {
   id: string;
@@ -11,6 +13,9 @@ export type Club = {
   skill_level?: string;
   join_link?: string;
   socials?: Record<string, string> | null;
+  location?: string;
+  category?: string;
+  image?: string | null;
 };
 
 /** Build filter options from actual DB tags so spelling/grammar match; match is case-insensitive. */
@@ -76,6 +81,7 @@ function ChevronIcon() {
 export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [selectedClub, setSelectedClub] = useState<Club | null>(null);
   const filterRef = useRef<HTMLDivElement>(null);
 
   const filterTagOptions = useMemo(() => getUniqueTagsFromClubs(clubs), [clubs]);
@@ -173,41 +179,19 @@ export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
 
       <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-[repeat(auto-fill,minmax(260px,1fr))] sm:gap-8 lg:gap-10">
         {filteredClubs.map((club) => (
-          <div
+          <ClubCard
             key={club.id}
-            className="flex flex-col rounded-lg border border-gray-300 p-4 shadow-sm transition-shadow hover:shadow-md sm:min-h-[320px] lg:min-h-[360px]"
-          >
-            <h2 className="text-xl font-semibold mb-2">{club.name}</h2>
-            <p className="text-sm text-gray-700 mb-4 line-clamp-3">
-              {club.description}
-            </p>
-            {/* Tags displayed exactly as in DB */}
-            {club.tags && club.tags.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 mb-3">
-                {club.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-600"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
-            <p
-              className="text-sm text-gray-500 mb-1 line-clamp-3"
-              title={club.meeting_time ?? undefined}
-            >
-              Meeting Time: {club.meeting_time}
-            </p>
-            <div className="mt-auto flex justify-end">
-              <button className="text-white bg-red-500 hover:bg-red-600 rounded-full px-5 py-2">
-                View Details
-              </button>
-            </div>
-          </div>
+            club={club}
+            onClick={() => setSelectedClub(club)}
+          />
         ))}
       </div>
+
+      <ClubDetailModal
+        club={selectedClub}
+        onClose={() => setSelectedClub(null)}
+        isOpen={selectedClub !== null}
+      />
     </main>
   );
 }
