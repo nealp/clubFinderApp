@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo } from "react";
-
+import Link from "next/link";
 export type Club = {
   id: string;
   name: string;
@@ -78,7 +78,10 @@ export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
 
-  const filterTagOptions = useMemo(() => getUniqueTagsFromClubs(clubs), [clubs]);
+  const filterTagOptions = useMemo(
+    () => getUniqueTagsFromClubs(clubs),
+    [clubs],
+  );
 
   const filteredClubs =
     selectedTag == null
@@ -201,9 +204,15 @@ export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
               Meeting Time: {club.meeting_time}
             </p>
             <div className="mt-auto flex justify-end">
-              <button className="text-white bg-red-500 hover:bg-red-600 rounded-full px-5 py-2">
+              {/* <button className="text-white bg-red-500 hover:bg-red-600 rounded-full px-5 py-2">
                 View Details
-              </button>
+              </button> */}
+              <Link
+                href={`/clubs/${club.id}`}
+                className="text-white bg-red-500 hover:bg-red-600 rounded-full px-5 py-2 inline-block"
+              >
+                View Details
+              </Link>
             </div>
           </div>
         ))}
