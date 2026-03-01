@@ -87,6 +87,56 @@ export default async function ClubDetailsPage({
               {club.meeting_time || "Contact for info"}
             </p>
           </div>
+        {/* SOCIALS */}
+        {club.socials && (
+          <div className="mt-4">
+            <p className="text-sm font-semibold text-gray-700 mb-2">Socials</p>
+
+            <div className="flex flex-wrap gap-3">
+              {club.socials.instagram && (
+                <a
+                  href={club.socials.instagram}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-4 py-2 rounded-full border border-gray-300 hover:border-red-500 hover:text-red-600 transition"
+                >
+                  Instagram
+                </a>
+              )}
+
+              {club.socials.discord && (
+                <a
+                  href={club.socials.discord}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-4 py-2 rounded-full border border-gray-300 hover:border-red-500 hover:text-red-600 transition"
+                >
+                  Discord
+                </a>
+              )}
+
+              {club.socials.website && (
+                <a
+                  href={club.socials.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-4 py-2 rounded-full border border-gray-300 hover:border-red-500 hover:text-red-600 transition"
+                >
+                  Website
+                </a>
+              )}
+
+              {club.socials.email && (
+                <a
+                  href={`mailto:${club.socials.email}`}
+                  className="px-4 py-2 rounded-full border border-gray-300 hover:border-red-500 hover:text-red-600 transition"
+                >
+                  Email
+                </a>
+              )}
+            </div>
+          </div>
+        )}
         </div>
 
         {/* RELATED CLUBS */}
