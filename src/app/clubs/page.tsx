@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import ClubCard from '@/components/ClubCard';
 import SearchBar from '@/components/SearchBar';
 
@@ -43,9 +44,22 @@ export default function ClubsPage() {
 
   return (
     <main className="min-h-screen bg-white text-black">
-      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8">
-        <h1 className="text-2xl font-bold sm:text-3xl">Clubs</h1>
-        <p className="mt-2 text-gray-600">All Clubs:</p>
+      <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8 lg:px-8 relative">
+        <div className="flex items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold sm:text-3xl">Clubs</h1>
+            <p className="mt-2 text-gray-600">All Clubs:</p>
+          </div>
+          <Link
+            href="/clubs/add"
+            className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-red-500 text-white shadow-lg transition-colors hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+            title="Add a club"
+          >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+          </Link>
+        </div>
         <div className="mt-4">
           <SearchBar clubs={placeholderClubs} onFilteredChange={setFilteredClubs} />
         </div>

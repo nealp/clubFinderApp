@@ -29,6 +29,20 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+## Add Club → Google Sheets
+
+The Clubs page includes a plus button that opens a form to submit a club for approval. Submissions are sent to a Google Sheet via a Google Apps Script web app.
+
+**Setup:**
+
+1. Create a Google Sheet with headers: `Name | Description | Meeting Time | Skill Level | Tags | Contact Email | Join Link | Submitted At`
+2. Extensions → Apps Script, paste the script from `scripts/google-sheets-club-submit.js`
+3. Deploy → New deployment → Web app → Execute as "Me", Who has access "Anyone"
+4. Copy the web app URL and add to `.env.local`:
+   ```
+   ADD_CLUB_GOOGLE_SHEETS_URL=https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
+   ```
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
