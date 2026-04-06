@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { useSavedClubs } from "@/hooks/useSavedClubs";
 
+import Link from "next/link";
 export type Club = {
   id: string;
   name: string;
@@ -233,7 +234,13 @@ export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
               </button>
               <button className="text-white bg-red-500 hover:bg-red-600 rounded-full px-5 py-2">
                 View Details
-              </button>
+              </button> */}
+              <Link
+                href={`/clubs/${club.id}`}
+                className="text-white bg-red-500 hover:bg-red-600 rounded-full px-5 py-2 inline-block"
+              >
+                View Details
+              </Link>
             </div>
           </div>
         ))}
