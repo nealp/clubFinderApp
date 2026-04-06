@@ -1,6 +1,8 @@
 "use client";
 
 import { useState, useRef, useEffect, useMemo } from "react";
+import { useSavedClubs } from "@/hooks/useSavedClubs";
+
 import Link from "next/link";
 export type Club = {
   id: string;
@@ -77,6 +79,7 @@ export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const filterRef = useRef<HTMLDivElement>(null);
+  const { isSaved, toggleSave } = useSavedClubs();
 
   const filterTagOptions = useMemo(
     () => getUniqueTagsFromClubs(clubs),
@@ -137,7 +140,7 @@ export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
         {isFilterOpen && (
           <div
             role="listbox"
-            className="absolute left-0 top-full z-20 mt-1 min-w-[220px] max-w-[min(320px,90vw)] rounded-lg border border-gray-200 bg-white py-1 shadow-lg sm:min-w-[260px]"
+            className="absolute left-0 top-full z-20 mt-1 min-w-55 max-w-[min(320px,90vw)] rounded-lg border border-gray-200 bg-white py-1 shadow-lg sm:min-w-65"
           >
             <div className="max-h-[70vh] overflow-y-auto py-1">
               <button
@@ -178,7 +181,7 @@ export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
         {filteredClubs.map((club) => (
           <div
             key={club.id}
-            className="flex flex-col rounded-lg border border-gray-300 p-4 shadow-sm transition-shadow hover:shadow-md sm:min-h-[320px] lg:min-h-[360px]"
+            className="flex flex-col rounded-lg border border-gray-300 p-4 shadow-sm transition-shadow hover:shadow-md sm:min-h-80 lg:min-h-90"
           >
             <h2 className="text-xl font-semibold mb-2">{club.name}</h2>
             <p className="text-sm text-gray-700 mb-4 line-clamp-3">
@@ -203,8 +206,33 @@ export default function ClubsWithTagFilter({ clubs }: { clubs: Club[] }) {
             >
               Meeting Time: {club.meeting_time}
             </p>
-            <div className="mt-auto flex justify-end">
-              {/* <button className="text-white bg-red-500 hover:bg-red-600 rounded-full px-5 py-2">
+            <div className="mt-auto flex items-center justify-between gap-2">
+              <button
+                type="button"
+                onClick={() => toggleSave(club)}
+                aria-label={isSaved(club.id) ? "Unsave club" : "Save club"}
+                className={`flex items-center gap-1.5 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                  isSaved(club.id)
+                    ? "border-red-500 bg-red-50 text-red-600 hover:bg-red-100"
+                    : "border-gray-300 bg-white text-gray-600 hover:bg-gray-50"
+                }`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill={isSaved(club.id) ? "currentColor" : "none"}
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                </svg>
+                {isSaved(club.id) ? "Saved" : "Save"}
+              </button>
+              <button className="text-white bg-red-500 hover:bg-red-600 rounded-full px-5 py-2">
                 View Details
               </button> */}
               <Link
