@@ -73,36 +73,7 @@ function normalizeTagsFromRow(tags: unknown): string[] {
   }
   return [];
 }
-/*
-const placeholderClubs: Club[] = [
-  {
-    id: "1",
-    name: "Club 1",
-    description: "This is the first placeholder club.",
-    tags: ["placeholder"],
-    meeting_time: "Fridays at 5 PM",
-    skill_level: "Beginner",
-    join_link: "https://google.com",
-    socials: {
-      instagram: "https://google.com",
-      tiktok: "https://google.com",
-    },
-  },
-  {
-    id: "2",
-    name: "Club 2",
-    description: "This is the second placeholder club.",
-    tags: ["placeholder"],
-    meeting_time: "Saturdays at 3 PM",
-    skill_level: "Intermediate",
-    join_link: "https://google.com",
-    socials: {
-      instagram: "https://google.com",
-      tiktok: "https://google.com",
-    },
-  },
-];
-*/
+
 export default async function ClubsPage() {
   const clubs = await getClubs();
   return <ClubsWithTagFilter clubs={clubs} />;
